@@ -9,13 +9,6 @@ from word_list import words
 from string import ascii_uppercase
 
 
-#chose the word that the user will play with
-
-
-
-
-
-
 game_running = True
 
 while game_running:
@@ -77,12 +70,8 @@ while game_running:
         game_letter_label.place(relx = game_letter_x, rely = game_letter_y)
         game_letter_label.config(font=("courier new",25))
         game_letter_x += 0.05
-
-
-
-    
-
-
+        
+ 
     word_list = ["Hello", "Basketball", "Doctor", "wingman"]
     game_word = random.choice(word_list)
         
@@ -141,6 +130,3 @@ while game_running:
     )
 
     root.mainloop()
-
-
-
