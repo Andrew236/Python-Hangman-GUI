@@ -94,9 +94,6 @@ while game_running:
     easy_button = Button(
         root,
         text = "Easy"
-        
-        
-        
     )
 
     easy_button.place(
