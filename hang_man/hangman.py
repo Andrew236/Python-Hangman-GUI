@@ -11,16 +11,17 @@ from string import ascii_uppercase
 
 game_running = True
 
-while game_running:
+while game_running == True:
     root = Tk()
     root.geometry("600x600")
     root.title("Andrew's Hangman")
     game_running = False
 
     letter_text_color = "black"
-
-
-    def letter_click(letter):
+    #game is going to use and that the user is going to guess
+    game_word = random.choice(words).upper()
+    letters_guessed = []
+    def letter_click(letter,letters_guessed):
         if letter == "A":
             a_button.config(state="disabled",bg="#909090")
 
@@ -94,49 +95,47 @@ while game_running:
             x_button.config(state="disabled",bg="#909090")
 
         if letter == "Y":
-            y_button.config(state="disabled",bg="#909090")\
-        
+            y_button.config(state="disabled",bg="#909090")
+
         if letter == "Z":
             z_button.config(state="disabled",bg="#909090")
 
+        letters_guessed.append(letter)
 
-    #here I am going to get the random word that the
-    #game is going to use and that the user is going to guess
+        #here I am going to display the words in a hidden fashion
+        #then I am going to handle the input if the user
+        #guesses the right letter, to be displayed
+        if len(game_word) <=5:
+            game_letter_x = 0.4
+            game_letter_y = 0.6
 
-    game_word = random.choice(words)
+        elif len(game_word) == 6:
+            game_letter_x = 0.38
+            game_letter_y = 0.6
 
-    #here I am going to display the words in a hidden fashion
-    if len(game_word) <=5:
-        game_letter_x = 0.4
-        game_letter_y = 0.6
+        elif len(game_word) == 7:
+            game_letter_x = 0.35
+            game_letter_y = 0.6
 
-    elif len(game_word) == 6:
-        game_letter_x = 0.38
-        game_letter_y = 0.6
+        elif len(game_word) > 7:
+            game_letter_x = 0.3
+            game_letter_y = 0.6
 
-    elif len(game_word) == 7:
-        game_letter_x = 0.35
-        game_letter_y = 0.6
+        else:
+            game_letter_x = 0.25
+            game_letter_y = 0.6
 
-    elif len(game_word) > 7:
-        game_letter_x = 0.3
-        game_letter_y = 0.6
-
-    else:
-        game_letter_x = 0.25
-        game_letter_y = 0.6
-
-    hidden ="*"
-    for i in game_word:
-        game_letter_label = Label(root, text=hidden, fg="black")
-        game_letter_label.place(relx = game_letter_x, rely = game_letter_y)
-        game_letter_label.config(font=("courier new",25))
-        game_letter_x += 0.05
-        
-
- 
-    word_listt = ["Hello", "A"]
-    game_word = random.choice(word_listt)
+        for i in range(len(game_word)):
+            if game_word[i] in letters_guessed:
+                game_letter_label = Label(root, text=game_word[i], fg="black")
+                game_letter_label.place(relx = game_letter_x, rely = game_letter_y)
+                game_letter_label.config(font=("courier new",25))
+                game_letter_x += 0.05
+            else:
+                game_letter_label = Label(root, text="*", fg="black")
+                game_letter_label.place(relx = game_letter_x, rely = game_letter_y)
+                game_letter_label.config(font=("courier new",25))
+                game_letter_x += 0.05
 
     welcome_title = Label(
         root,
@@ -168,7 +167,6 @@ while game_running:
     medium_button = Button(
         root,
         text = "Medium",
-        
     )
 
     medium_button.place(
@@ -193,163 +191,163 @@ while game_running:
 
     a_button = Button(root, text="A", width = 5, fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("A"))
+                            command=lambda: letter_click("A",letters_guessed))
     a_button.place(relx=0.15,rely=0.8)
 
     b_button = Button(root, text="B", width = 5, fg=letter_text_color,
                     bg="#ff944d",
-                    command=lambda: letter_click("B"))
+                    command=lambda: letter_click("B",letters_guessed))
     b_button.place(relx=0.225,rely=0.8)
 
     c_button = Button(root, text="C",width=5, fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("C"))
+                            command=lambda: letter_click("C",letters_guessed))
     c_button.place(relx=0.3,rely=0.8)
 
     d_button = Button(root, text="D", width = 5, fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("D"))
+                            command=lambda: letter_click("D",letters_guessed))
     d_button.place(relx=0.375,rely=0.8)
 
     e_button = Button(root, text="E", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("E"))
-    
+                            command=lambda: letter_click("E",letters_guessed))
+
     e_button.place(relx=0.45,rely=0.8)
 
     f_button = Button(root, text="F", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("F"))
+                            command=lambda: letter_click("F",letters_guessed))
     f_button.place(relx=0.525,rely=0.8)
 
     g_button = Button(root, text="G", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("G"))
+                            command=lambda: letter_click("G",letters_guessed))
     g_button.place(relx=0.6,rely=0.8)
 
     h_button = Button(root, text="H", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("H"))
+                            command=lambda: letter_click("H",letters_guessed))
     h_button.place(relx=0.675,rely=0.8)
 
     i_button = Button(root, text="I", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("I"))
+                            command=lambda: letter_click("I",letters_guessed))
     i_button.place(relx=0.75,rely=0.8)
 
     j_button = Button(root, text="J", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("J"))
+                            command=lambda: letter_click("J",letters_guessed))
     j_button.place(relx=0.15,rely=0.844)
 
     k_button = Button(root, text="K", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("K"))
+                            command=lambda: letter_click("K",letters_guessed))
     k_button.place(relx=0.225,rely=0.844)
 
     l_button = Button(root, text="L",width=5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("L"))
+                            command=lambda: letter_click("L",letters_guessed))
     l_button.place(relx=0.3,rely=0.844)
 
     m_button = Button(root, text="M", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("M"))
+                            command=lambda: letter_click("M",letters_guessed))
     m_button.place(relx=0.375,rely=0.844)
 
     n_button = Button(root, text="N", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("N"))
+                            command=lambda: letter_click("N",letters_guessed))
     n_button.place(relx=0.45,rely=0.844)
 
     o_button = Button(root, text="O", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("O"))
+                            command=lambda: letter_click("O",letters_guessed))
     o_button.place(relx=0.525,rely=0.844)
 
     p_button = Button(root, text="P", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("P"))
+                            command=lambda: letter_click("P",letters_guessed))
     p_button.place(relx=0.6,rely=0.844)
 
     q_button = Button(root, text="Q", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("Q"))
+                            command=lambda: letter_click("Q",letters_guessed))
     q_button.place(relx=0.675,rely=0.844)
 
     r_button = Button(root, text="R", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("R"))
+                            command=lambda: letter_click("R",letters_guessed))
     r_button.place(relx=0.75,rely=0.844)
 
     s_button = Button(root, text="S", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("S"))
+                            command=lambda: letter_click("S",letters_guessed))
     s_button.place(relx=0.15,rely=0.888)
 
     t_button = Button(root, text="T", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("T"))
+                            command=lambda: letter_click("T",letters_guessed))
     t_button.place(relx=0.225,rely=0.888)
 
     u_button = Button(root, text="U",width=5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("U"))
+                            command=lambda: letter_click("U",letters_guessed))
     u_button.place(relx=0.3,rely=0.888)
 
     v_button = Button(root, text="V", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("V"))
+                            command=lambda: letter_click("V",letters_guessed))
     v_button.place(relx=0.375,rely=0.888)
 
     w_button = Button(root, text="W", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("W"))
+                            command=lambda: letter_click("W",letters_guessed))
     w_button.place(relx=0.45,rely=0.888)
 
     x_button = Button(root, text="X", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("X"))
-    
+                            command=lambda: letter_click("X",letters_guessed))
+
     x_button.place(relx=0.525,rely=0.888)
 
     y_button = Button(root, text="Y", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("Y"))
+                            command=lambda: letter_click("Y",letters_guessed))
     y_button.place(relx=0.6,rely=0.888)
 
     z_button = Button(root, text="Z", width = 5,
                             fg=letter_text_color,
                             bg="#ff944d",
-                            command=lambda: letter_click("Z"))
+                            command=lambda: letter_click("Z",letters_guessed))
     z_button.place(relx=0.675,rely=0.888)
 
     star_button = Button(root, text="*", width = 5)
     star_button.place(relx=0.75,rely=0.888)
 
-    #end of the creation of the buttons from a-z
-    
+    # end of the creation of the buttons from a-z
 
 
+    letter_click("*",letters_guessed)
     root.mainloop()
