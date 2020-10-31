@@ -8,19 +8,26 @@ from word_list import words
 
 from string import ascii_uppercase
 
-
+from sys import exit
 
 game_running = True
 
+def quit_game():
+    exit(0)
 
-while game_running == True:
-    
+def play_again_no():
+    exit(0)
+
+def play_again_yes(game_running):
+    game_running = True
+    root.destroy()
+    return game_running
+
+while game_running:
     root = Tk()
     root.geometry("600x600")
     root.title("Andrew's Hangman")
-    game_running = False
-    
-
+   
     letter_text_color = "black"
     #game is going to use and that the user is going to guess
     game_word = random.choice(words).upper()
@@ -134,18 +141,15 @@ while game_running == True:
         check_star_list = []
         for star in game_word:
             check_star_list.append("*")
-        
-        
+
         if letter not in game_word:
             wrong_letters.pop()
 
         user_lives = len(wrong_letters)
-        
-        print(user_lives)
-        print(wrong_letters)
-        
+
+        print(game_word)
         for i in range(len(game_word)):
-            
+
             if game_word[i] in letters_guessed:
                 game_letter_label = Label(root, text=game_word[i], fg="black")
                 game_letter_label.place(relx = game_letter_x, rely = game_letter_y)
@@ -159,34 +163,46 @@ while game_running == True:
                 game_letter_x += 0.05
 
         lives_label = Label(root, text="Lives:")
-        lives_label.place(relx = 0.4, anchor = "n", rely = 0.23)
+        lives_label.place(relx = 0.5, anchor = "n", rely = 0.23)
         lives_label.config(font=("courier new",25))
-        
+
         if user_lives == 0:
             num_of_lives_label = Label(root, text =user_lives,fg="black")
-            num_of_lives_label.place(relx = 0.55, anchor = "n", rely = 0.23)
+            num_of_lives_label.place(relx = 0.6, anchor = "n", rely = 0.23)
             num_of_lives_label.config(font=("courier new",25))
             messagebox.showinfo("LOSER", "You lost the game! The word was: {}".format(game_word))
-            
+            play_again_label = Label(root, text = "Play Hangman Again?")
+            play_again_label.place(relx = 0.5, anchor = "n", rely = 0.43)
+            play_again_label.config(font=("courier new",25))
+            play_again_yes_button = Button(root,text="yes",width = 5, command = lambda:play_again_yes(game_running))
+            play_again_yes_button.place(relx = 0.35,rely=0.5)
+            play_again_no_button = Button(root,text="no",width = 5,command = play_again_no)
+            play_again_no_button.place(relx = 0.5,rely=0.5)
 
         if user_lives > 3:
-            
+
             num_of_lives_label = Label(root, text =user_lives,fg="green")
-            num_of_lives_label.place(relx = 0.55, anchor = "n", rely = 0.23)
+            num_of_lives_label.place(relx = 0.6, anchor = "n", rely = 0.23)
             num_of_lives_label.config(font=("courier new",25))
 
         else:
             num_of_lives_label = Label(root, text = user_lives,fg="red")
-            num_of_lives_label.place(relx = 0.55, anchor = "n", rely = 0.23)
+            num_of_lives_label.place(relx = 0.6, anchor = "n", rely = 0.23)
             num_of_lives_label.config(font=("courier new",25))
-
-      
-
-
         if len(check_star_list) == 0:
+
                 print("you win")
-                game_running = False
                 messagebox.showinfo("WINNER", "CONGRATS\n""YOU MY FRIEND ARE A CHAMPION, AND A WINNER")
+                play_again_label = Label(root, text = "Play Hangman Again?")
+                play_again_label.place(relx = 0.5, anchor = "n", rely = 0.43)
+                play_again_label.config(font=("courier new",25))
+                play_again_yes_button = Button(root,text="yes",width = 5, command = lambda:play_again_yes(game_running))
+                play_again_yes_button.place(relx = 0.35,rely=0.5)
+                play_again_no_button = Button(root,text="no",width = 5,command = play_again_no)
+                play_again_no_button.place(relx = 0.5,rely=0.5)
+                
+
+
     welcome_title = Label(
         root,
         text="Welcome To Hangman",
@@ -203,41 +219,20 @@ while game_running == True:
         rely=0.02
     )
 
-    easy_button = Button(
+    quit_button = Button(
         root,
-        text = "Easy"
+        text = "Quit",
+        bg="#cc0000",
+        fg="white",
+        command = lambda: quit_game()
     )
 
-    easy_button.place(
-        relx = 0.15,
-        rely = 0.13,
+    quit_button.place(
+        relx = 0.5,
+        rely = 0.95,
+        anchor = "n",
         width = 100
     )
-
-    medium_button = Button(
-        root,
-        text = "Medium",
-    )
-
-    medium_button.place(
-        relx = 0.4,
-        rely = 0.13,
-        width = 100
-    )
-
-    hard_button = Button(
-        root,
-        text = "Hard",
-    )
-
-    hard_button.place(
-        relx = 0.65,
-        rely = 0.13,
-        width = 100
-    )
-
-    
-
     #creation of buttons from a-z
 
     a_button = Button(root, text="A", width = 5, fg=letter_text_color,
@@ -401,4 +396,9 @@ while game_running == True:
 
 
     letter_click('*',letters_guessed,wrong_letters)
+    
+    
     root.mainloop()
+    
+
+    
