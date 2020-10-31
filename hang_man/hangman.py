@@ -9,6 +9,7 @@ from word_list import words
 from string import ascii_uppercase
 
 
+
 game_running = True
 
 
@@ -18,12 +19,13 @@ while game_running == True:
     root.geometry("600x600")
     root.title("Andrew's Hangman")
     game_running = False
+    
 
     letter_text_color = "black"
     #game is going to use and that the user is going to guess
     game_word = random.choice(words).upper()
     letters_guessed = []
-    wrong_letters = [1,1,1,1,1,1,1]
+    wrong_letters = [1,1,1,1,1,1,1,1,1,1]
     def letter_click(letter,letters_guessed,wrong_letters):
 
         if letter == "A":
@@ -141,7 +143,7 @@ while game_running == True:
         
         print(user_lives)
         print(wrong_letters)
-
+        
         for i in range(len(game_word)):
             
             if game_word[i] in letters_guessed:
@@ -164,7 +166,8 @@ while game_running == True:
             num_of_lives_label = Label(root, text =user_lives,fg="black")
             num_of_lives_label.place(relx = 0.55, anchor = "n", rely = 0.23)
             num_of_lives_label.config(font=("courier new",25))
-            messagebox.showinfo("LOSER", "You lost the game!")
+            messagebox.showinfo("LOSER", "You lost the game! The word was: {}".format(game_word))
+            
 
         if user_lives > 3:
             
@@ -183,7 +186,7 @@ while game_running == True:
         if len(check_star_list) == 0:
                 print("you win")
                 game_running = False
-                game_running = False
+                messagebox.showinfo("WINNER", "CONGRATS\n""YOU MY FRIEND ARE A CHAMPION, AND A WINNER")
     welcome_title = Label(
         root,
         text="Welcome To Hangman",
